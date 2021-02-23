@@ -24,6 +24,14 @@ public class Fruit {
 		return count;
 	}
 
+	public String getVariety() {
+		return variety;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

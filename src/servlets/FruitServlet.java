@@ -35,7 +35,7 @@ public class FruitServlet extends HttpServlet {
 			case "getAll" -> response.getWriter().append(new Gson().toJson(FruitDB.getFruits()));
 			case "getByParam" -> getByParam(request, response);
 			case "edit" -> update(request, response);
-			default -> respond(response, "[HTTPResponse] "+ action + " is not a valid parameter");
+			default -> respond(response, "[HTTPResponse] \"" + action + "\" is not a valid parameter");
 		}
 	}
 

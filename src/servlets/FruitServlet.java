@@ -49,14 +49,17 @@ public class FruitServlet extends HttpServlet {
 		String variety = request.getParameter("variety");
 		String color = request.getParameter("color");
 
-		if(variety != null) {
+		if(variety != null && color != null) {
+			List<Fruit> result = FruitDB.getFruits().stream().filter(fruit -> fruit.getVariety().equals(variety) && fruit.getColor().equals(color)).collect(Collectors.toList());
+			response.getWriter().append(new Gson().toJson(result));
+		} else if(variety != null) {
 			List<Fruit> result = FruitDB.getFruits().stream().filter(fruit -> fruit.getVariety().equals(variety)).collect(Collectors.toList());
 			response.getWriter().append(new Gson().toJson(result));
 		} else if(color != null) {
 			List<Fruit> result = FruitDB.getFruits().stream().filter(fruit -> fruit.getColor().equals(color)).collect(Collectors.toList());
 			response.getWriter().append(new Gson().toJson(result));
 		} else {
-			System.out.println("Both fields are empty...");
+			respond(response, "[HTTPResponse] Both fields are empty. Please choose at least one param to search!");
 		}
 	}
 
@@ -75,7 +78,6 @@ public class FruitServlet extends HttpServlet {
 			FruitDB.deleteFruit(new Fruit(variety, color));
 			respond(response, "[HTTPResponse] Request received. Fruit deletion was successful.");
 		} else {
-			respond(response, "[HTTPResponse] Error processing your request. Probably wrong parameter for \"choice\". Please retry.");
 			respond(response, "[HTTPResponse] Error processing your request. Probably wrong parameter for \"choice\". Please retry.");
 		}
 
